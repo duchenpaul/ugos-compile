@@ -88,14 +88,6 @@ jobs:
         run: |
           make -j1 V=s
 
-      - name: Save build
-        id: cache-build-save
-        uses: actions/cache/save@v3
-        with:
-          path: |
-            ./openwrt
-          key: openwrt-build
-
       - name: Upload bin directory
         uses: actions/upload-artifact@master
         if: always()
