@@ -1,12 +1,4 @@
-#=================================================
-#   Description: Build OpenWrt using GitHub Actions
-#   Lisence: MIT
-#   Author: P3TERX
-#   Blog: https://p3terx.com
-#=================================================
-
 name: Build OpenWrt
-
 on:
   repository_dispatch:
   workflow_dispatch:
@@ -24,6 +16,7 @@ on:
 jobs:
   build:
     env:
+      DEBIAN_FRONTEND: noninteractive
       openwrt_branch: v22.03.0-rc4
     runs-on: ubuntu-22.04
     steps:
@@ -47,8 +40,6 @@ jobs:
         uses: actions/checkout@master
 
       - name: Initialization environment
-        env:
-          DEBIAN_FRONTEND: noninteractive
         run: |
           sudo -E apt-get update
           sudo -E apt install -y build-essential clang flex bison g++ gawk \
