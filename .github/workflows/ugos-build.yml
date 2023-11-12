@@ -23,6 +23,8 @@ on:
 
 jobs:
   build:
+    env:
+      openwrt_branch: v22.03.0-rc4
     runs-on: ubuntu-22.04
     steps:
       - name: Free Disk Space (Ubuntu)
@@ -65,7 +67,7 @@ jobs:
           key: openwrt-build
 
       - name: Clone source code
-        run: git clone -b v22.03.0-rc4 --single-branch https://github.com/openwrt/openwrt openwrt
+        run: git clone -b ${{env.openwrt_branch}} --single-branch https://github.com/openwrt/openwrt openwrt || (cd openwrt && git pull && git checkout -f ${{env.openwrt_branch}})
 
       - name: Update feeds
         working-directory: ./openwrt
