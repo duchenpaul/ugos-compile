@@ -49,6 +49,9 @@ jobs:
           sudo -E apt-get -y autoremove --purge
           sudo -E apt-get clean
 
+          echo "/usr/local/lib" >> /etc/ld.so.conf
+          ldconfig
+
       - name: Restore cached build
         id: cache-build-restore
         uses: actions/cache/restore@v3
