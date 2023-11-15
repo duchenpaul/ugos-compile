@@ -9,9 +9,9 @@ on:
         default: "false"
   release:
     types: [published]
-  push:
-    branches:
-      - master
+  # push:
+  #   branches:
+  #     - master
 
 jobs:
   build:
@@ -49,13 +49,6 @@ jobs:
             sudo vim
           sudo -E apt-get -y autoremove --purge
           sudo -E apt-get clean
-
-          # wget https://github.com/libevent/libevent/releases/download/release-2.1.12-stable/libevent-2.1.12-stable.tar.gz
-          # tar -zxvf libevent-2.1.*-stable.tar.gz && cd libevent-2.1.*-stable/
-          # ./configure && make && sudo make install
-          # echo "/usr/local/lib" | sudo tee -a /etc/ld.so.conf
-          # sudo ldconfig
-          # sudo ln -s /usr/local/lib/libevent-2.1.so.7 /usr/lib64/
 
       - name: Restore cached build
         id: cache-build-restore
