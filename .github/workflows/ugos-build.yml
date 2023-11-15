@@ -50,13 +50,12 @@ jobs:
           sudo -E apt-get -y autoremove --purge
           sudo -E apt-get clean
 
-      - name: Restore cached build
-        id: cache-build-restore
-        uses: actions/cache/restore@v3
+      - uses: actions/cache/restore@v3
+        id: restore-cache
         with:
           path: |
             ./openwrt
-          key: openwrt-build
+          key: ${{ runner.os }}-cache
 
       - name: Clone source code
         run: git clone -b ${{env.openwrt_branch}} --single-branch https://github.com/openwrt/openwrt openwrt || (cd openwrt && git pull && git checkout -f ${{env.openwrt_branch}})
@@ -92,6 +91,12 @@ jobs:
         working-directory: ./openwrt
         run: |
           make -j1 V=s
+
+      - uses: actions/cache/save@v3
+        with:
+          path: |
+            ./openwrt
+          key: ${{ steps.restore-cache.outputs.cache-primary-key }}
 
       - name: Upload bin directory
         uses: actions/upload-artifact@master
