@@ -105,13 +105,13 @@ jobs:
           name: ugos_bin
           path: openwrt/bin
 
-      - name: Wrap binaries
-        working-directory: ./openwrt
-        run: |
-          tar zcvf bin.tar.gz ./bin
+      # - name: Wrap binaries
+      #   working-directory: ./openwrt
+      #   run: |
+      #     tar zcvf bin.tar.gz ./bin
 
-      - name: upload binaries to release
-        uses: softprops/action-gh-release@v1
-        if: ${{startsWith(github.ref, 'refs/tags/') }}
-        with:
-          files: bin.tar.gz
+      # - name: upload binaries to release
+      #   uses: softprops/action-gh-release@v1
+      #   if: ${{startsWith(github.ref, 'refs/tags/') }}
+      #   with:
+      #     files: bin.tar.gz
