@@ -44,8 +44,8 @@ jobs:
         run: |
           sudo -E apt-get update
           sudo -E apt install -y build-essential clang flex bison g++ gawk \
-            gcc-multilib g++-multilib gettext git libncurses-dev libssl-dev \
-            python3-distutils rsync unzip zlib1g-dev file wget libc6 libevent-dev \
+            gcc-multilib g++-multilib gettext git libncurses-dev libssl-dev libffi-dev zlib1g-dev libc6 libevent-dev  \
+            python3-distutils python3-dev cargo pkg-config rsync unzip file wget \
             sudo vim
           sudo -E apt-get -y autoremove --purge
           sudo -E apt-get clean
