@@ -20,6 +20,10 @@ jobs:
       openwrt_branch: v22.03.0-rc4
     runs-on: ubuntu-22.04
     steps:
+      - name: Get the last run number
+        id: vars
+        run: echo "LAST_RUN_NUMBER=$(echo $((${{ github.run_number }}-1)))" >> $GITHUB_ENV
+
       - name: Free Disk Space (Ubuntu)
         uses: jlumbroso/free-disk-space@main
         with:
@@ -55,7 +59,7 @@ jobs:
         with:
           path: |
             ./openwrt
-          key: ${{ runner.os }}-cache
+          key: ${{ runner.os }}-cache-${{ env.LAST_RUN_NUMBER }}
 
       - name: Clone source code
         run: git clone -b ${{env.openwrt_branch}} --single-branch https://github.com/openwrt/openwrt openwrt || (cd openwrt && git pull && git checkout -f ${{env.openwrt_branch}})
@@ -100,7 +104,7 @@ jobs:
         with:
           path: |
             ./openwrt
-          key: ${{ steps.restore-cache.outputs.cache-primary-key }}
+          key: ${{ runner.os }}-cache-${{ github.run_number }}
 
       - name: Upload bin directory
         uses: actions/upload-artifact@master
