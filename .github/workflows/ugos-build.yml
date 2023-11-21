@@ -80,9 +80,7 @@ jobs:
         working-directory: ./openwrt
         run: |
           cp ../dotconfig .config
-
-          # https://github.com/openwrt/packages/issues/18876
-          ( [ -f "staging_dir/hostpkg/bin/pip3" ] && staging_dir/hostpkg/bin/pip3 install pip setuptools --upgrade  ) || echo "Skip pip3 upgrade"
+          cp ../extra_script.sh extra_script.sh && bash extra_script.sh
 
       - name: SSH connection to Actions
         uses: P3TERX/ssh2actions@v1.0.0
@@ -92,15 +90,18 @@ jobs:
         working-directory: ./openwrt
         run: |
           echo -e "$(nproc) thread compile"
+          make defconfig
           make -j$(nproc)
 
       - name: Single-thread compile
         if: failure()
         working-directory: ./openwrt
         run: |
+          bash extra_script.sh
           make -j1 V=s
 
       - uses: actions/cache/save@v3
+        if: always()
         with:
           path: |
             ./openwrt
