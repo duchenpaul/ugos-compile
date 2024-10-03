@@ -1,5 +1,5 @@
 # Compile ugos
-
+## Archived: ugos has been replaced by ugos pro, hence this is not needed.
 ## Compile
 ### Run in docker
 ```bash
